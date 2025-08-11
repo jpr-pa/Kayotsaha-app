@@ -11,7 +11,7 @@ FROM_EMAIL = os.getenv("FROM_EMAIL", SMTP_USER)
 
 
 def send_email(to_email: str, subject: str, body: str) -> bool:
-    """Generic function to send an email."""
+    """Generic function to send an HTML email. Returns True on success."""
     try:
         msg = MIMEMultipart()
         msg["From"] = FROM_EMAIL
@@ -27,12 +27,13 @@ def send_email(to_email: str, subject: str, body: str) -> bool:
 
         return True
     except Exception as e:
-        print(f"❌ Email sending failed: {e}")
+        # In real app, replace print with structured logging
+        print(f"[email] failed to send to {to_email}: {e}")
         return False
 
 
 def send_otp_email(to_email: str, otp: str) -> bool:
-    """Send a styled OTP email."""
+    """Send a branded OTP email. Returns True on success."""
     subject = "Your Kayotsaha OTP Code"
     body = f"""
     <html>
